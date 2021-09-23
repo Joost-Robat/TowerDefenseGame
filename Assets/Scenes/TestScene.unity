@@ -225,7 +225,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1846789064}
-  - component: {fileID: 1846789063}
   - component: {fileID: 1846789062}
   m_Layer: 0
   m_Name: TEST
@@ -253,20 +252,10 @@ MonoBehaviour:
   row: 0
   rowPos: 0
   buildingProgress: 0
+  generating: 0
   pathTile: {fileID: 2178486579094421605, guid: 24d0e67c780c13945910ee0e4bae69b0, type: 3}
   buildTile: {fileID: 7699669747194298502, guid: 047140c11b6ec37408c80dd4a24213f4, type: 3}
---- !u!114 &1846789063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846789061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ac55073dbeccfe499c3f43b6f7e65bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  spawn: {x: 0, y: 0, z: 0}
 --- !u!4 &1846789064
 Transform:
   m_ObjectHideFlags: 0

@@ -26,8 +26,10 @@ public class RandomArrayGenerator : MonoBehaviour
     protected int theCouncil;
     protected float counter;
     public bool buildingProgress;
+    public bool generating;
     public GameObject pathTile;
     public GameObject buildTile;
+    public Vector3 spawn;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,18 +43,50 @@ public class RandomArrayGenerator : MonoBehaviour
         east0 = 1;
         south0 = 1;
         west0 = 1;
+        generating = true;
 
+        //GenerateArray();
+        GenerateWorld();
+        
+        
+    }
+
+    public void GenerateArray()
+    {
+        //for(int .Parse...)
+    }
+    public void GenerateWorld()
+    {
+        for (int i = 0; i < randomMap.GetLength(0); i++)
+        {
+            for (int j = 0; j < randomMap.GetLength(1); j++)
+            {
+                Vector3 spawnPosition = new Vector3(i * pathTile.GetComponent<Renderer>().bounds.size.x, 0, j * pathTile.GetComponent<Renderer>().bounds.size.z);
+                switch (randomMap[i, j])
+                {
+                    case 0:
+                        Instantiate(buildTile, spawnPosition, Quaternion.identity);
+                        break;
+                    case 1:
+                        Instantiate(pathTile, spawnPosition, Quaternion.identity);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (counter < 5)
+        if(counter < 5)
         {
             counter += Time.deltaTime;
         }
         if (counter >= 5)
         {
+            generating = false;
             north = false;
             south = false;
             east = false;
@@ -63,234 +97,243 @@ public class RandomArrayGenerator : MonoBehaviour
         }
         if (buildingProgress == true)
         {
+            spawn.x = row;
+            spawn.z = rowPos;
             if (randomMap[row, rowPos] == 1)
             {
-                Vector3 spawn = new Vector3(row, gameObject.transform.position.y, rowPos);
-                Instantiate(pathTile, spawn, gameObject.transform.rotation);
+                Debug.Log(spawn);
+                Instantiate(pathTile, spawn, transform.rotation);
                 rowPos += 1;
             }
-            else
+            else if(randomMap[row, rowPos] == 0)
             {
-                Vector3 spawn = new Vector3(row, gameObject.transform.position.y, rowPos);
-                Instantiate(buildTile, spawn, gameObject.transform.rotation);
+                Debug.Log(spawn);
                 rowPos += 1;
+                Instantiate(buildTile, spawn, transform.rotation);
             }
             if(rowPos >= 13)
             {
                 rowPos = 0;
                 row += 1;
             }
-        }
-        if (row >= 12)
-        {
-            south = false;
-        }
-        if (row <= 1)
-        {
-            north = false;
-        }
-        if (rowPos <= 1)
-        {
-            west = false;
-        }
-        if (rowPos >= 11)
-        {
-            east = false;
-        }
-        if (theCouncil == 1)
-        {
-            if (north == true)
+            if(row >= 14)
             {
-                if (Random.Range(1, north0) == 1)
-                {
-                    row -= 1;
-                    randomMap[row, rowPos] = 1;
-                    east = true;
-                    west = true;
-                    north = true;
-                    south = false;
-                    if (west0! <= 2)
-                    {
-                        west0 += 1;
-                    }
-                    if (east0! <= 2)
-                    {
-                        east0 += 1;
-                    }
-                }
+                buildingProgress = false;
             }
         }
-        if (theCouncil == 2)
+        if (generating == true)
         {
-            if (east == true)
+            if (row >= randomMap.GetLength(0))
             {
-                if (Random.Range(1, east0) == 1)
-                {
-                    rowPos += 1;
-                    randomMap[row, rowPos] = 1;
-                    east = true;
-                    west = false;
-                    north = true;
-                    south = true;
-                    if (north0! <= 2)
-                    {
-                        north0 += 1;
-                    }
-                    if (south0! <= 2)
-                    {
-                        south0 += 1;
-                    }
-                }
+                south = false;
             }
-        }
-        if (theCouncil == 3)
-        {
-            if (south == true)
+            if (row <= randomMap.GetLongLength(0))
             {
-                if (Random.Range(1, south0) == 1)
-                {
-                    row += 1;
-                    randomMap[row, rowPos] = 1;
-                    east = true;
-                    west = true;
-                    north = false;
-                    south = true;
-                    if (west0! <= 2)
-                    {
-                        west0 += 1;
-                    }
-                    if (east0! <= 2)
-                    {
-                        east0 += 1;
-                    }
-                }
+                north = false;
             }
-        }
-        if (theCouncil == 4)
-        {
-            if (west == true)
+            if (rowPos <= 1)
             {
-                if (Random.Range(1, west0) == 1)
+                west = false;
+            }
+            if (rowPos >= 11)
+            {
+                east = false;
+            }
+            if (theCouncil == 1)
+            {
+                if (north == true)
                 {
-                    rowPos -= 1;
-                    randomMap[row, rowPos] = 1;
-                    east = false;
-                    west = true;
-                    north = true;
-                    south = true;
-                    if (north0! <= 2)
+                    if (Random.Range(1, north0) == 1)
                     {
-                        north0 += 1;
-                    }
-                    if (south0! <= 2)
-                    {
-                        south0 += 1;
-                    }
-                }
-                if (row >= 12)
-                {
-                    south = false;
-                }
-                if (row <= 1)
-                {
-                    north = false;
-                }
-                if (rowPos <= 1)
-                {
-                    west = false;
-                }
-                if (rowPos >= 11)
-                {
-                    east = false;
-                }
-                if (theCouncil == 1)
-                {
-                    if (north == true)
-                    {
-                        if (Random.Range(1, north0) == 1)
+                        row -= 1;
+                        randomMap[row, rowPos] = 1;
+                        east = true;
+                        west = true;
+                        north = true;
+                        south = false;
+                        if (west0! <= 2)
                         {
-                            row -= 1;
-                            randomMap[row, rowPos] = 1;
-                            east = true;
-                            west = true;
-                            north = true;
-                            south = false;
-                            if (west0! <= 2)
-                            {
-                                west0 += 1;
-                            }
-                            if (east0! <= 2)
-                            {
-                                east0 += 1;
-                            }
+                            west0 += 1;
+                        }
+                        if (east0! <= 2)
+                        {
+                            east0 += 1;
                         }
                     }
                 }
-                if (theCouncil == 2)
+            }
+            if (theCouncil == 2)
+            {
+                if (east == true)
                 {
-                    if (east == true)
+                    if (Random.Range(1, east0) == 1)
                     {
-                        if (Random.Range(1, east0) == 1)
+                        rowPos += 1;
+                        randomMap[row, rowPos] = 1;
+                        east = true;
+                        west = false;
+                        north = true;
+                        south = true;
+                        if (north0! <= 2)
                         {
-                            rowPos += 1;
-                            randomMap[row, rowPos] = 1;
-                            east = true;
-                            west = false;
-                            north = true;
-                            south = true;
-                            if (north0! <= 2)
-                            {
-                                north0 += 1;
-                            }
-                            if (south0! <= 2)
-                            {
-                                south0 += 1;
-                            }
+                            north0 += 1;
+                        }
+                        if (south0! <= 2)
+                        {
+                            south0 += 1;
                         }
                     }
                 }
-                if (theCouncil == 3)
+            }
+            if (theCouncil == 3)
+            {
+                if (south == true)
                 {
-                    if (south == true)
+                    if (Random.Range(1, south0) == 1)
                     {
-                        if (Random.Range(1, south0) == 1)
+                        row += 1;
+                        randomMap[row, rowPos] = 1;
+                        east = true;
+                        west = true;
+                        north = false;
+                        south = true;
+                        if (west0! <= 2)
                         {
-                            row += 1;
-                            randomMap[row, rowPos] = 1;
-                            east = true;
-                            west = true;
-                            north = false;
-                            south = true;
-                            if (west0! <= 2)
-                            {
-                                west0 += 1;
-                            }
-                            if (east0! <= 2)
-                            {
-                                east0 += 1;
-                            }
+                            west0 += 1;
+                        }
+                        if (east0! <= 2)
+                        {
+                            east0 += 1;
                         }
                     }
                 }
-                if (theCouncil == 4)
+            }
+            if (theCouncil == 4)
+            {
+                if (west == true)
                 {
-                    if (west == true)
+                    if (Random.Range(1, west0) == 1)
                     {
-                        if (Random.Range(1, west0) == 1)
+                        rowPos -= 1;
+                        randomMap[row, rowPos] = 1;
+                        east = false;
+                        west = true;
+                        north = true;
+                        south = true;
+                        if (north0! <= 2)
                         {
-                            rowPos -= 1;
-                            randomMap[row, rowPos] = 1;
-                            east = false;
-                            west = true;
-                            north = true;
-                            south = true;
-                            if (north0! <= 2)
+                            north0 += 1;
+                        }
+                        if (south0! <= 2)
+                        {
+                            south0 += 1;
+                        }
+                    }
+                    if (row >= 12)
+                    {
+                        south = false;
+                    }
+                    if (row <= 1)
+                    {
+                        north = false;
+                    }
+                    if (rowPos <= 1)
+                    {
+                        west = false;
+                    }
+                    if (rowPos >= 11)
+                    {
+                        east = false;
+                    }
+                    if (theCouncil == 1)
+                    {
+                        if (north == true)
+                        {
+                            if (Random.Range(1, north0) == 1)
                             {
-                                north0 += 1;
+                                row -= 1;
+                                randomMap[row, rowPos] = 1;
+                                east = true;
+                                west = true;
+                                north = true;
+                                south = false;
+                                if (west0! <= 2)
+                                {
+                                    west0 += 1;
+                                }
+                                if (east0! <= 2)
+                                {
+                                    east0 += 1;
+                                }
                             }
-                            if (south0! <= 2)
+                        }
+                    }
+                    if (theCouncil == 2)
+                    {
+                        if (east == true)
+                        {
+                            if (Random.Range(1, east0) == 1)
                             {
-                                south0 += 1;
+                                rowPos += 1;
+                                randomMap[row, rowPos] = 1;
+                                east = true;
+                                west = false;
+                                north = true;
+                                south = true;
+                                if (north0! <= 2)
+                                {
+                                    north0 += 1;
+                                }
+                                if (south0! <= 2)
+                                {
+                                    south0 += 1;
+                                }
+                            }
+                        }
+                    }
+                    if (theCouncil == 3)
+                    {
+                        if (south == true)
+                        {
+                            if (Random.Range(1, south0) == 1)
+                            {
+                                row += 1;
+                                randomMap[row, rowPos] = 1;
+                                east = true;
+                                west = true;
+                                north = false;
+                                south = true;
+                                if (west0! <= 2)
+                                {
+                                    west0 += 1;
+                                }
+                                if (east0! <= 2)
+                                {
+                                    east0 += 1;
+                                }
+                            }
+                        }
+                    }
+                    if (theCouncil == 4)
+                    {
+                        if (west == true)
+                        {
+                            if (Random.Range(1, west0) == 1)
+                            {
+                                rowPos -= 1;
+                                randomMap[row, rowPos] = 1;
+                                east = false;
+                                west = true;
+                                north = true;
+                                south = true;
+                                if (north0! <= 2)
+                                {
+                                    north0 += 1;
+                                }
+                                if (south0! <= 2)
+                                {
+                                    south0 += 1;
+                                }
                             }
                         }
                     }
@@ -298,4 +341,5 @@ public class RandomArrayGenerator : MonoBehaviour
             }
         }
     }
+
 }
