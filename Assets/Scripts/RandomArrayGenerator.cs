@@ -24,7 +24,7 @@ public class RandomArrayGenerator : MonoBehaviour
     protected bool north, south, west, east;
     public int north0, south0, west0, east0, row, rowPos;
     protected int theCouncil;
-    protected float counter;
+    protected int diceRoll;
     public bool buildingProgress;
     public bool generating;
     public GameObject pathTile;
@@ -57,81 +57,81 @@ public class RandomArrayGenerator : MonoBehaviour
         {
             for(int j = 0; j < randomMap.GetLength(1); i ++)
             {
-                if(north == true)
+                theCouncil = Random.Range(1, 4);
+                switch (theCouncil)
                 {
-                    theCouncil = Random.Range(1, north0);
-                    if(theCouncil == 1)
-                    {
-                        row -= 1;
-                        randomMap[row, rowPos] = 1;
-                        if(north0 > 2)
+                    case 1:
+                        diceRoll = Random.Range(1, north0);
+                        if (north == true && diceRoll == 1)
                         {
-                            north0 -= 1;
-                            south = false;
+                            row -= 1;
+                            randomMap[row, rowPos] = 1;
+                             if (north0 > 2)
+                             {
+                                north0 -= 1;
+                                south = false;
+                             }
+                            else
+                            {
+                                north0 = 4;
+                                south = true;
+                            }
                         }
-                    }
-                    else
-                    {
-                        north0 = 4;
-                        south = true;
-                    }
-                }
-                if(south == true)
-                {
-                    theCouncil = Random.Range(1, south0);
-                    if (theCouncil == 1)
-                    {
-                        row += 1;
-                        randomMap[row, rowPos] = 1;
-                        if(south0 > 2)
+                        break;
+                    case 2:
+                        diceRoll = Random.Range(1, south0);
+                        if (south == true && diceRoll == 1)
                         {
-                            south0 -= 1;
-                            north = false;
+                            row += 1;
+                            randomMap[row, rowPos] = 1;
+                            if (south0 > 2)
+                            {
+                                south0 -= 1;
+                                north = false;
+                            }
+                            else
+                            {
+                                north = true;
+                                south0 = 4;
+                            }
                         }
-                    }
-                    else
-                    {
-                        north = true;
-                        south0 = 4;
-                    }
-                }
-                if(west == true)
-                {
-                    theCouncil = Random.Range(1, west0);
-                    if(theCouncil == 1)
-                    {
-                        rowPos += 1;
-                        randomMap[row, rowPos] = 1;
-                        if(west0 > 2)
+                        break;
+                    case 3:
+                        diceRoll = Random.Range(1, west0);
+                        if (west == true && diceRoll == 1)
                         {
-                            west0 -= 1;
-                            east = false;
+                            rowPos += 1;
+                            randomMap[row, rowPos] = 1;
+                            if (west0 > 2)
+                            {
+                                west0 -= 1;
+                                east = false;
+                            }
+                            else
+                            {
+                                west0 = 4;
+                                east = true;
+                            }
                         }
-                    }
-                    else
-                    {
-                        west0 = 4;
-                        east = true;
-                    }
-                }
-                if(east == true)
-                {
-                    theCouncil = Random.Range(1, east0);
-                    if (theCouncil == 1)
-                    {
-                        rowPos += 1;
-                        randomMap[row, rowPos] = 1;
-                        if(east0 > 2)
+                        break;
+                    case 4:
+                        diceRoll = Random.Range(1, east0);
+                        if (east == true && diceRoll == 1)
                         {
-                            east0 -= 1;
-                            west = false;
+                            rowPos += 1;
+                            randomMap[row, rowPos] = 1;
+                            if (east0 > 2)
+                            {
+                                east0 -= 1;
+                                west = false;
+                            }
+                            else
+                            {
+                                east0 = 4;
+                                east = true;
+                            }
                         }
-                    }
-                    else
-                    {
-                        east0 = 4;
-                        east = true;
-                    }
+                        break;
                 }
             }
         }
