@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253139f11721cf14991368a4c88d5d35, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e882dd74a790384aa724dfc56f84515, type: 3}
   m_Name: FastEnemy
   m_EditorClassIdentifier: 
   name: FastEnemy
-  speed: 4
-  health: 10
+  speed: 8
+  health: 5

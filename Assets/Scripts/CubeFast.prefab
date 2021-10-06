@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4448827681975844298}
   - component: {fileID: 4448827681975844299}
   - component: {fileID: 4448827681975844296}
-  - component: {fileID: 4448827681975844311}
   - component: {fileID: 6429122016163846715}
+  - component: {fileID: 893075912983238189}
   m_Layer: 0
   m_Name: CubeFast
   m_TagString: Untagged
@@ -120,18 +120,6 @@ MonoBehaviour:
   south: 1
   movementTrue: 0.501224
   movement: 1
---- !u!114 &4448827681975844311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4448827681975844297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 397fd9a0684c62442938d23e581a90ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6429122016163846715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +132,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c969ff9744b3267479de7b2fb1c1bc87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: b5ea22695096cf74a93a635c50802521, type: 2}
+  enemy: {fileID: 11400000, guid: 9aed17afa41be9b42a7fdc52a0d2a2ab, type: 2}
   nameText: {fileID: 0}
   speedValue: 0
   healthPoints: 0
+--- !u!114 &893075912983238189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4448827681975844297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b1f9244e500be54384aa2140e3c2a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
