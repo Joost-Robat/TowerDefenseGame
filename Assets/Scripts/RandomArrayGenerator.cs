@@ -7,18 +7,18 @@ public class RandomArrayGenerator : MonoBehaviour
     public int[,] randomMap =
     {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
+        {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+        {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0 },
+        {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0 },
+        {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0 },
+        {0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0 },
+        {0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+        {0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+        {0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 0 },
+        {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
+        {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
+        {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
+        {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
     };
     protected bool north, south, west, east;
@@ -42,8 +42,7 @@ public class RandomArrayGenerator : MonoBehaviour
         south0 = 4;
         west0 = 4;
         generating = true;
-
-        GenerateArray();
+        //GenerateArray();
         GenerateWorld();
         
         
@@ -177,27 +176,32 @@ public class RandomArrayGenerator : MonoBehaviour
     }
     public void GenerateWorld()
     {
-        for (int i = 0; i < randomMap.GetLength(0); i++)
+        for (int i = 13; i >= 0; i--)
         {
-            for (int j = 0; j < randomMap.GetLength(1); j++)
+            for (int j = 12; j >= 0; j--)
             {
                 Vector3 spawnPosition = new Vector3(i * pathTile.GetComponent<Renderer>().bounds.size.x, 0, j * pathTile.GetComponent<Renderer>().bounds.size.z);
                 switch (randomMap[i, j])
                 {
                     case 0:
-                        Instantiate(buildTile, spawnPosition, Quaternion.identity);
+                        var lastTile = Instantiate(buildTile, spawnPosition, Quaternion.identity);
+                        lastTile.transform.parent = gameObject.transform;
                         break;
                     case 1:
-                        Instantiate(pathTile, spawnPosition, Quaternion.identity);
+                        lastTile = Instantiate(pathTile, spawnPosition, Quaternion.identity);
+                        lastTile.transform.parent = gameObject.transform;
                         break;
                     case 2:
-                        Instantiate(defaultTile, spawnPosition, Quaternion.identity);
+                        lastTile = Instantiate(defaultTile, spawnPosition, Quaternion.identity);
+                        lastTile.transform.parent = gameObject.transform;
                         break;
                     default:
                         break;
                 }
             }
         }
+        gameObject.transform.Rotate(0, 180, 0);
+        transform.position += new Vector3(13, 0, 12);
     }
 
     // Update is called once per frame

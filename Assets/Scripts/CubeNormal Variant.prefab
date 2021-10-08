@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4448827681975844296, guid: 8cebab7f110c4424ba7ef1aa626cb091, type: 3}
+      propertyPath: movementTrue
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4448827681975844297, guid: 8cebab7f110c4424ba7ef1aa626cb091, type: 3}
       propertyPath: m_Name
       value: CubeNormal Variant

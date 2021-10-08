@@ -118,7 +118,7 @@ MonoBehaviour:
   north: 1
   east: 1
   south: 1
-  movementTrue: 0.501224
+  movementTrue: 0
   movement: 1
 --- !u!114 &6429122016163846715
 MonoBehaviour:

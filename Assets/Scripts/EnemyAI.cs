@@ -50,8 +50,9 @@ public class EnemyAI : MonoBehaviour
         if(movementTrue < 0.5)
         {
             movementTrue += Time.deltaTime;
+            movement = false;
         }
-        else
+        else if(movementTrue >= 0.5)
         {
             movement = true;
         }
