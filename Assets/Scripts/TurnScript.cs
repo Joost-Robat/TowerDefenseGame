@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TurnScript : MonoBehaviour
 {
-    private GameObject Barrel;
+    [SerializeField]private GameObject Barrel;
     private Transform turn;
+    private float turn1;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +16,14 @@ public class TurnScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Quaternion.identity(Barrel);
+        turn1 = Time.deltaTime * 100;
+        if(Barrel.transform.rotation.y > gameObject.transform.position.y)
+        {
+            gameObject.transform.Rotate(0, turn1, 0);
+        }
+        else if(Barrel.transform.rotation.y < gameObject.transform.position.y)
+        {
+            gameObject.transform.Rotate(0, -turn1, 0);
+        }
     }
 }
