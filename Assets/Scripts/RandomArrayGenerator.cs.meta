@@ -6,7 +6,6 @@ MonoImporter:
   defaultReferences:
   - pathTile: {fileID: 2178486579094421605, guid: 24d0e67c780c13945910ee0e4bae69b0, type: 3}
   - buildTile: {fileID: 7699669747194298502, guid: 047140c11b6ec37408c80dd4a24213f4, type: 3}
-  - defaultTile: {fileID: 7896702135782860436, guid: 34a86afa2655aa8439a75bf04e8b84a7, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

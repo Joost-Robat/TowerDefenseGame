@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public float speed;
-    public int row;
-    public int rowPos;
-    public float counter;
-    public bool west;
-    public bool north;
-    public bool east;
-    public bool south;
-    public float movementTrue;
-    public bool movement;
-    private RandomArrayGenerator randomMap;
+    public int row, rowPos;
+    public float counter, counter1, movementTrue, speed, priority;
+    public bool west, north, east, south, movement;
     public int[,] map =
     {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -35,33 +27,41 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        randomMap = FindObjectOfType<RandomArrayGenerator>();
         row = 12;
         rowPos = 11;
         south = true;
         north = true;
         west = true;
-
+        priority = 0.001f;
     }
 
     // Update is called once per frame
+    void endPoint()
+    {
+        Debug.Log("Endpoint reached.");
+        FindObjectOfType<PlayerHealthComponent>().TakeDamage(1);
+        priority = 0;
+        gameObject.SetActive(false);
+        Destroy(gameObject);
+        movement = false;
+    }
     void Update()
     {
-        if(movementTrue < 0.5)
+        if (movementTrue < 0.5)
         {
             movementTrue += Time.deltaTime;
-            movement = false;
         }
-        else if(movementTrue >= 0.5)
+        else
         {
             movement = true;
         }
-        if(movement == true)
+        if (movement == true)
         {
+            priority += Time.deltaTime;
             // west
             if (west == true)
             {
-                if (randomMap.randomMap[row, rowPos - 1] == 1 || randomMap.randomMap[row, rowPos - 1] == 2)
+                if (map[row, rowPos - 1] == 1 || map[row, rowPos - 1] == 2)
                 {
                     transform.position += new Vector3(0, 0, Time.deltaTime * speed);
                     counter += Time.deltaTime * speed;
@@ -73,12 +73,9 @@ public class EnemyAI : MonoBehaviour
                         south = true;
                         west = true;
                         counter = 0;
-                        if(randomMap.randomMap[row, rowPos] == 2)
+                        if (map[row, rowPos] == 2)
                         {
-                            Debug.Log("Endgoal reached.");
-                            FindObjectOfType<PlayerHealthComponent>().TakeDamage(1);
-                            Destroy(gameObject);
-                            movement = false;
+                            endPoint();
                         }
                     }
 
@@ -87,7 +84,7 @@ public class EnemyAI : MonoBehaviour
             // east
             if (east == true)
             {
-                if (randomMap.randomMap[row, rowPos + 1] == 1 || randomMap.randomMap[row, rowPos + 1] == 2)
+                if (map[row, rowPos + 1] == 1 || map[row, rowPos + 1] == 2)
                 {
                     transform.position -= new Vector3(0, 0, Time.deltaTime * speed);
                     counter += Time.deltaTime * speed;
@@ -99,12 +96,9 @@ public class EnemyAI : MonoBehaviour
                         south = true;
                         east = true;
                         counter = 0;
-                        if (randomMap.randomMap[row, rowPos] == 2)
+                        if (map[row, rowPos] == 2)
                         {
-                            Debug.Log("Endgoal reached.");
-                            FindObjectOfType<PlayerHealthComponent>().TakeDamage(1);
-                            Destroy(gameObject);
-                            movement = false;
+                            endPoint();
                         }
                     }
                 }
@@ -112,7 +106,7 @@ public class EnemyAI : MonoBehaviour
             // north
             if (north == true)
             {
-                if (randomMap.randomMap[row + 1, rowPos] == 1 || randomMap.randomMap[row + 1, rowPos] == 2)
+                if (map[row + 1, rowPos] == 1 || map[row + 1, rowPos] == 2)
                 {
                     transform.position -= new Vector3(Time.deltaTime * speed, 0, 0);
                     counter += Time.deltaTime * speed;
@@ -124,20 +118,16 @@ public class EnemyAI : MonoBehaviour
                         west = true;
                         east = true;
                         counter = 0;
-                        if (randomMap.randomMap[row, rowPos] == 2)
+                        if (map[row, rowPos] == 2)
                         {
-                            Debug.Log("Endgoal reached.");
-                            FindObjectOfType<PlayerHealthComponent>().TakeDamage(1);
-                            Destroy(gameObject);
-                            movement = false;
+                            endPoint();
                         }
                     }
                 }
             }
-            // south
             if (south == true)
             {
-                if (randomMap.randomMap[row - 1, rowPos] == 1 || randomMap.randomMap[row - 1, rowPos] == 2)
+                if (map[row - 1, rowPos] == 1 || map[row - 1, rowPos] == 2)
                 {
                     transform.position += new Vector3(Time.deltaTime * speed, 0, 0);
                     counter += Time.deltaTime * speed;
@@ -149,12 +139,9 @@ public class EnemyAI : MonoBehaviour
                         east = true;
                         west = true;
                         counter = 0;
-                        if (randomMap.randomMap[row, rowPos] == 2)
+                        if (map[row, rowPos] == 2)
                         {
-                            Debug.Log("Endgoal reached.");
-                            FindObjectOfType<PlayerHealthComponent>().TakeDamage(1);
-                            Destroy(gameObject);
-                            movement = false;
+                            endPoint();
                         }
                     }
                 }

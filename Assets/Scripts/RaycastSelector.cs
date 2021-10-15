@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class RaycastSelector : MonoBehaviour
 {
+    public Transform lastHit;
+    public GameObject towerTransparent, tower, lastTower;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,10 +17,26 @@ public class RaycastSelector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, -Vector3.up, out hit))
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                lastHit = hit.transform;
+                Destroy(lastTower);
+                if (lastHit.GetComponent<Tile>().getIsBuildable() == true)
+                {
+                    lastTower = Instantiate(towerTransparent, lastHit.position, Quaternion.identity);
+                }
+                if (lastHit.GetComponent<Tile>().getIsBuildable() == true)
+                {
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    {
+                        Instantiate(tower, lastHit.position, Quaternion.identity);
+                    }
+                }
+            }
         }
     }
 }
