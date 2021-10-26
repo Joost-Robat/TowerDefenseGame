@@ -34,7 +34,7 @@ public class TowerScript : MonoBehaviour
             transform.LookAt(target.transform);
         }*/
     }
-    void enemyCheck()
+    public void enemyCheck()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         prior = 0;

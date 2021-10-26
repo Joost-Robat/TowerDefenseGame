@@ -6,7 +6,7 @@ public class RaycastSelector : MonoBehaviour
 {
     public Transform lastHit;
     public GameObject towerTransparent, tower, lastTower;
-
+    public bool toggle;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +18,18 @@ public class RaycastSelector : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
+        {
+            if (toggle != true)
+            {
+                toggle = true;
+            }
+            else
+            {
+                toggle = false;
+                Destroy(lastTower);
+            }
+        }
+        if(toggle == true)
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
