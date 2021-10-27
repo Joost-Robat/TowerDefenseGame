@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class TurnScript : TowerScript
 {
-    [SerializeField]private GameObject Barrel, barrel1;
+    [SerializeField]private GameObject Barrel, barrel1, bullet, bulletSpawned;
     private Transform turn;
-    private float turn1;
+    private float turn1, timer;
     private bool checkpoint0, checkpoint1;
-    int arrayPos;
-    float prior = 0;
-    private GameObject target;
     GameObject[] enemies;
     // Start is called before the first frame update
     void Start()
@@ -21,28 +18,47 @@ public class TurnScript : TowerScript
     // Update is called once per frame
     void Update()
     {
-        turn1 = Time.deltaTime * 100;
-        if(Barrel.transform.rotation.y > gameObject.transform.rotation.y)
+        if(timer < 1.5)
         {
-            gameObject.transform.Rotate(0, turn1, 0);
-            checkpoint0 = true;
-            if(checkpoint1 == true)
-            {
-                enemyCheck();
-                barrel1.transform.LookAt(target.transform.position);
-            }
-            checkpoint1 = false;
+            timer += Time.deltaTime;
         }
-        else
+        if(target != null)
         {
-            gameObject.transform.Rotate(0, -turn1, 0);
-            checkpoint1 = true;
-            if(checkpoint0 == true)
+            if (timer >= 1.5)
             {
-                enemyCheck();
-                barrel1.transform.LookAt(target.transform.position);
+                if (bulletSpawned != null)
+                {
+                    Destroy(bulletSpawned);
+                }
+                bulletSpawned = Instantiate(bullet, transform.position, transform.rotation);
+                bulletSpawned.transform.forward = Barrel.transform.forward;
+                timer = 0;
             }
-            checkpoint0 = false;
+        }
+        enemyCheck();
+        if(target != null)
+        {
+            turn1 = Time.deltaTime * 100;
+            if (Barrel.transform.rotation.y > gameObject.transform.rotation.y)
+            {
+                gameObject.transform.Rotate(0, turn1, 0);
+                checkpoint0 = true;
+                if (checkpoint1 == true)
+                {
+                    barrel1.transform.LookAt(target.transform.position);
+                }
+                checkpoint1 = false;
+            }
+            else
+            {
+                gameObject.transform.Rotate(0, -turn1, 0);
+                checkpoint1 = true;
+                if (checkpoint0 == true)
+                {
+                    barrel1.transform.LookAt(target.transform.position);
+                }
+                checkpoint0 = false;
+            }
         }
         
     }

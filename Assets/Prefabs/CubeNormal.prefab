@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2112905591525448217}
   - component: {fileID: 2112905591525448218}
   - component: {fileID: 2112905591525448197}
+  - component: {fileID: 7412057999778984305}
   m_Layer: 0
   m_Name: CubeNormal
   m_TagString: Enemy
@@ -134,3 +135,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startHealth: 10
+--- !u!65 &7412057999778984305
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112905591525448219}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

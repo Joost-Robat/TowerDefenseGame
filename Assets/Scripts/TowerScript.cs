@@ -6,7 +6,7 @@ public class TowerScript : MonoBehaviour
 {
     int arrayPos;
     float prior = 0;
-    private GameObject target;
+    public GameObject target;
 
     GameObject[] enemies;
     // Start is called before the first frame update
@@ -24,6 +24,7 @@ public class TowerScript : MonoBehaviour
             return;
 
         transform.LookAt(target.transform);
+
 
         /*if (target.GetComponent<EnemyAI>().priority == 0)
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class RaycastSelector : MonoBehaviour
 {
     public Transform lastHit;
-    public GameObject towerTransparent, tower, lastTower;
+    public GameObject towerTransparent, tower, lastTower, lastTower1;
     public bool toggle;
 
     // Start is called before the first frame update
@@ -26,7 +26,14 @@ public class RaycastSelector : MonoBehaviour
             else
             {
                 toggle = false;
-                Destroy(lastTower);
+                if(lastTower != null)
+                {
+                    Destroy(lastTower);
+                }
+                if(lastTower1 != null)
+                {
+                    Destroy(lastTower1);
+                }
             }
         }
         if(toggle == true)
@@ -36,16 +43,36 @@ public class RaycastSelector : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 lastHit = hit.transform;
-                Destroy(lastTower);
-                if (lastHit.GetComponent<Tile>().getIsBuildable() == true)
+                if (lastHit.GetComponent<Tile>() != null)
                 {
-                    lastTower = Instantiate(towerTransparent, lastHit.position, Quaternion.identity);
-                }
-                if (lastHit.GetComponent<Tile>().getIsBuildable() == true)
-                {
-                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    if(lastHit.GetComponent<Tile>().getIsBuildable() == true)
                     {
-                        Instantiate(tower, lastHit.position, Quaternion.identity);
+                        if (lastTower == null)
+                        {
+                            lastTower = Instantiate(towerTransparent, lastHit.position, Quaternion.identity);
+                            if (lastTower1 != null)
+                            {
+                                Destroy(lastTower1);
+                            }
+                        }
+                        else if (lastTower1 == null)
+                        {
+                            lastTower1 = Instantiate(towerTransparent, lastHit.position, Quaternion.identity);
+                            if (lastTower != null)
+                            {
+                                Destroy(lastTower);
+                            }
+                        }
+                    }
+                }
+                if (lastHit.GetComponent<Tile>() != null)
+                {
+                    if(lastHit.GetComponent<Tile>().getIsBuildable() == true)
+                    {
+                        if (Input.GetKeyDown(KeyCode.Mouse0))
+                        {
+                            Instantiate(tower, lastHit.position, Quaternion.identity);
+                        }
                     }
                 }
             }
