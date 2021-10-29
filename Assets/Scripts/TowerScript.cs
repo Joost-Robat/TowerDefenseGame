@@ -8,7 +8,7 @@ public class TowerScript : MonoBehaviour
     float prior = 0;
     public GameObject target;
 
-    GameObject[] enemies;
+    public GameObject[] enemies;
     // Start is called before the first frame update
     void Start()
     {

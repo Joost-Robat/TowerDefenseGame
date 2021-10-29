@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class TurnScript : TowerScript
 {
-    [SerializeField]private GameObject Barrel, barrel1, bullet, bulletSpawned;
+    public GameObject Barrel, barrel1, bullet, bulletSpawned;
     private Transform turn;
     private float turn1, timer;
     private bool checkpoint0, checkpoint1;
-    GameObject[] enemies;
     // Start is called before the first frame update
     void Start()
     {

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : TurnScript
+public class BulletScript : TowerScript
 {
     [SerializeField]private float bulletSpeed;
-    [SerializeField]private float bulletDamage;
+    [SerializeField]private int bulletDamage;
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerUI ui = GameObject.FindGameObjectWithTag("UI").GetComponent<PlayerUI>();
     }
     // Update is called once per frame
     void Update()
@@ -23,7 +23,10 @@ public class BulletScript : TurnScript
     private void OnCollisionEnter(Collision collision)
     {
         EnemyHealthComponent health = collision.transform.GetComponent<EnemyHealthComponent>();
+        PlayerUI ui = GameObject.FindGameObjectWithTag("UI").GetComponent<PlayerUI>();
+        ui.giveScrap(bulletDamage);
         health.TakeDamage(bulletDamage);
+        ui.UpdateUI();
         Destroy(gameObject);
     }
 }

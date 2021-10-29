@@ -6,7 +6,9 @@ public class RaycastSelector : MonoBehaviour
 {
     public Transform lastHit;
     public GameObject towerTransparent, tower, lastTower, lastTower1;
-    public bool toggle;
+    private bool toggle, placeable;
+    [SerializeField]private GameObject buildingOff;
+    [SerializeField]private GameObject buildingOn;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +24,15 @@ public class RaycastSelector : MonoBehaviour
             if (toggle != true)
             {
                 toggle = true;
+                buildingOff.SetActive(false);
+                buildingOn.SetActive(true);
             }
             else
             {
                 toggle = false;
-                if(lastTower != null)
+                buildingOn.SetActive(false);
+                buildingOff.SetActive(true);
+                if (lastTower != null)
                 {
                     Destroy(lastTower);
                 }
@@ -34,6 +40,15 @@ public class RaycastSelector : MonoBehaviour
                 {
                     Destroy(lastTower1);
                 }
+            }
+        }
+        if(placeable == true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Mouse button pressed");
+                Instantiate(tower, lastHit.position, Quaternion.identity);
+                lastHit.GetComponent<Tile>().placedTower();
             }
         }
         if(toggle == true)
@@ -47,6 +62,7 @@ public class RaycastSelector : MonoBehaviour
                 {
                     if(lastHit.GetComponent<Tile>().getIsBuildable() == true)
                     {
+                        placeable = true;
                         if (lastTower == null)
                         {
                             lastTower = Instantiate(towerTransparent, lastHit.position, Quaternion.identity);
@@ -62,16 +78,6 @@ public class RaycastSelector : MonoBehaviour
                             {
                                 Destroy(lastTower);
                             }
-                        }
-                    }
-                }
-                if (lastHit.GetComponent<Tile>() != null)
-                {
-                    if(lastHit.GetComponent<Tile>().getIsBuildable() == true)
-                    {
-                        if (Input.GetKeyDown(KeyCode.Mouse0))
-                        {
-                            Instantiate(tower, lastHit.position, Quaternion.identity);
                         }
                     }
                 }

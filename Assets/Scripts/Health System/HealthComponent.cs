@@ -21,7 +21,7 @@ public class HealthComponent : MonoBehaviour
             Death();
         }
     }
-    protected virtual void Death()
+    public virtual void Death()
     {
         Debug.Log("Enemy Died.");
     }

@@ -10,4 +10,8 @@ public class Tile : MonoBehaviour
     {
         return isBuildable;
     }
+    public void placedTower()
+    {
+        isBuildable = false;
+    }
 }

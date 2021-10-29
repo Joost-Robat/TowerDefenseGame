@@ -9,7 +9,7 @@ public class EnemyHealthComponent : HealthComponent
     {
         
     }
-    protected override void Death()
+    public override void Death()
     {
         base.Death();
         Destroy(gameObject);

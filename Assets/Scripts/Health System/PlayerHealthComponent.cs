@@ -13,10 +13,10 @@ public class PlayerHealthComponent : HealthComponent
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        FindObjectOfType<PlayerHealthUI>().UpdateUI();
+        FindObjectOfType<PlayerUI>().UpdateUI();
         Debug.Log("Speler krijgt 1 damage.");
     }
-    protected override void Death()
+    public override void Death()
     {
         base.Death();
         Debug.Log("Speler is dood.");
