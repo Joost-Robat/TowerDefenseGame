@@ -17,7 +17,6 @@ public class HealthComponent : MonoBehaviour
         _currentHealth -= damage;
         if(_currentHealth <= 0)
         {
-            Debug.Log(gameObject + "Took damage");
             Death();
         }
     }

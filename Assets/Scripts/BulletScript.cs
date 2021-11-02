@@ -9,7 +9,7 @@ public class BulletScript : TowerScript
     // Start is called before the first frame update
     void Start()
     {
-        PlayerUI ui = GameObject.FindGameObjectWithTag("UI").GetComponent<PlayerUI>();
+        EnemyHealthComponent enemyHealth = FindObjectOfType<EnemyHealthComponent>();
     }
     // Update is called once per frame
     void Update()
@@ -22,11 +22,8 @@ public class BulletScript : TowerScript
     }
     private void OnCollisionEnter(Collision collision)
     {
-        EnemyHealthComponent health = collision.transform.GetComponent<EnemyHealthComponent>();
-        PlayerUI ui = GameObject.FindGameObjectWithTag("UI").GetComponent<PlayerUI>();
-        ui.giveScrap(bulletDamage);
-        health.TakeDamage(bulletDamage);
-        ui.UpdateUI();
+        EnemyHealthComponent enemyHealth = FindObjectOfType<EnemyHealthComponent>();
+        enemyHealth.bullet(bulletDamage, collision);
         Destroy(gameObject);
     }
 }

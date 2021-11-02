@@ -16,9 +16,13 @@ public class PlayerUI : MonoBehaviour
         text.text = "Player Lives: " + AmountOfLives;
         text1.text = "Scrap: " + scrap;
     }
-    public void giveScrap(int amount)
+    public void adjustScrap(int amount)
     {
         scrap += amount;
+    }
+    public int scrapAmount()
+    {
+        return scrap;
     }
     private void Start()
     {
