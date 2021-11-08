@@ -63,5 +63,17 @@ PrefabInstance:
       propertyPath: speed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2181891767871008859, guid: 5e09d9331f978344ea43ccb4abce325e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6ade3f692f7059546a1044e84f6a9d59, type: 2}
+    - target: {fileID: 4195201336897221680, guid: 5e09d9331f978344ea43ccb4abce325e, type: 3}
+      propertyPath: m_Mass
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4195201336897221680, guid: 5e09d9331f978344ea43ccb4abce325e, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e09d9331f978344ea43ccb4abce325e, type: 3}

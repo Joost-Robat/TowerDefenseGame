@@ -29,6 +29,7 @@ public class TurnScript : TowerScript
                 {
                     Destroy(bulletSpawned);
                 }
+                barrel1.transform.LookAt(target.transform);
                 bulletSpawned = Instantiate(bullet, transform.position, transform.rotation);
                 bulletSpawned.transform.forward = Barrel.transform.forward;
                 timer = 0;
@@ -37,27 +38,7 @@ public class TurnScript : TowerScript
         enemyCheck();
         if(target != null)
         {
-            turn1 = Time.deltaTime * 100;
-            if (Barrel.transform.rotation.y > gameObject.transform.rotation.y)
-            {
-                gameObject.transform.Rotate(0, turn1, 0);
-                checkpoint0 = true;
-                if (checkpoint1 == true)
-                {
-                    barrel1.transform.LookAt(target.transform.position);
-                }
-                checkpoint1 = false;
-            }
-            else
-            {
-                gameObject.transform.Rotate(0, -turn1, 0);
-                checkpoint1 = true;
-                if (checkpoint0 == true)
-                {
-                    barrel1.transform.LookAt(target.transform.position);
-                }
-                checkpoint0 = false;
-            }
+            transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Barrel.transform.rotation, 1);
         }
         
     }

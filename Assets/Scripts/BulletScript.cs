@@ -6,6 +6,7 @@ public class BulletScript : TowerScript
 {
     [SerializeField]private float bulletSpeed;
     [SerializeField]private int bulletDamage;
+    [SerializeField]private bool piercing;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +25,10 @@ public class BulletScript : TowerScript
     {
         EnemyHealthComponent enemyHealth = FindObjectOfType<EnemyHealthComponent>();
         enemyHealth.bullet(bulletDamage, collision);
+        if(piercing == true)
+        {
+            return;
+        }
         Destroy(gameObject);
     }
 }

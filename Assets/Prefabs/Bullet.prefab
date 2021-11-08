@@ -112,3 +112,4 @@ MonoBehaviour:
   enemies: []
   bulletSpeed: 100
   bulletDamage: 2
+  piercing: 0

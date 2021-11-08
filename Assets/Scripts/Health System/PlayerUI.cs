@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    public Text text, text1;
+    public Text text, text1, text2;
     private string health;
     private PlayerHealthComponent playerHealth;
     private int scrap;
@@ -15,6 +15,7 @@ public class PlayerUI : MonoBehaviour
         float AmountOfLives = playerHealth.Currenthealth;
         text.text = "Player Lives: " + AmountOfLives;
         text1.text = "Scrap: " + scrap;
+        text2.text = "Wave " + FindObjectOfType<WaveSystem>().wave;
     }
     public void adjustScrap(int amount)
     {

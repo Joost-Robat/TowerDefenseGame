@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealthComponent : HealthComponent
 {
@@ -12,6 +13,7 @@ public class PlayerHealthComponent : HealthComponent
     }
     public override void TakeDamage(float damage)
     {
+
         base.TakeDamage(damage);
         FindObjectOfType<PlayerUI>().UpdateUI();
         Debug.Log("Speler krijgt 1 damage.");
@@ -19,6 +21,7 @@ public class PlayerHealthComponent : HealthComponent
     public override void Death()
     {
         base.Death();
+        SceneManager.LoadScene("TestScene");
         Debug.Log("Speler is dood.");
     }
 }
