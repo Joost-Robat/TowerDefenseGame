@@ -5,83 +5,120 @@ using UnityEngine;
 public class WaveSystem : MonoBehaviour
 {
     private float timer, time, progress, spawningTimer, addingEnemies;
-    private int amountNormal, amountFast, amountTank, baseAmount0, baseAmount1;
+    private int amountNormal, amountFast, amountTank, normalSpawns, fastSpawns, tankSpawns;
     public int wave;
     [SerializeField]private GameObject enemy;
     [SerializeField]private GameObject enemyFast;
     [SerializeField] private GameObject enemyTank;
-    private bool fast, tank, normal;
+    [SerializeField] private GameObject boss;
+    private bool fast, tank, normal, running;
+    private GameObject currentEnemy, currentEnemy1;
     // Start is called before the first frame update
     void Start()
     {
         wave = 1;
-        amountNormal = 2;
         time = 5;
         normal = true;
-    }
-    private void spawn(int amount, GameObject enemyVariant)
-    {
-        for(int spawns = amount; spawns >= 1;)
-        {
-            spawningTimer += Time.deltaTime;
-            if (spawningTimer >= 0.6)
-            {
-                Instantiate(enemy, transform.position, Quaternion.identity);
-                spawningTimer = 0;
-                spawns -= 1;
-            }
-        }
+        running = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if(timer >= time)
+        if(running == true)
         {
-            if (time == 5)
+            timer += Time.deltaTime;
+            if(timer >= time)
             {
                 time = 10;
-            }
-            wave += 1;
-            if(normal == true)
-            {
-                spawn(amountNormal, enemy);
-            }
-            if(fast == true)
-            {
-                spawn(amountFast, enemyFast);
-                progress += 1;
-            }
-            if(tank == true)
-            {
-                spawn(amountTank, enemyTank);
-            }
-            if(tank == false && fast == false)
-            {
-                amountNormal += 2;
-                if(amountNormal >= 10)
+                wave++;
+                if (normal == true)
                 {
-                    fast = true;
-                    spawn(amountNormal, enemyFast);
-                    amountFast = amountNormal;
-                    amountFast /= 2;
-                    amountNormal = 4;
+                    amountNormal += 2;
+                    if(amountNormal >= 8)
+                    {
+                        fast = true;
+                        normal = false;
+                        amountFast = amountNormal;
+                        amountNormal = 0;
+                    }
                 }
-            }
-            if(progress >= 4)
-            {
-                time = 1;
-                amountTank += 1;
-                tank = true;
-                spawn(amountNormal, enemyTank);
-                if(progress >= 6)
+                if(fast == true)
                 {
-                    spawn(10, enemyTank);
-                    progress = 0;
+                   if(amountFast >= 12)
+                    {
+                        amountNormal = 0;
+                        amountFast = 0;
+                        tank = true;
+                        amountTank = 5;
+                        fast = false;
+                        return;
+                    }
+                    else
+                    {
+                        amountFast += 2;
+                    }
                 }
+                if(tank == true)
+                {
+                    if(amountTank == 7)
+                    {
+                        amountNormal = 6;
+                        amountFast = 6;
+                        amountTank = 4;
+                    }
+                    amountTank += 2;
+                }
+                if(wave >= 10)
+                {
+                    amountTank = 100;
+                }
+
+
+                updateAmounts();
+                return;
             }
-            timer = 0;
         }
+        else
+        {
+            spawningTimer += Time.deltaTime;
+            if(spawningTimer >= 0.6)
+            {
+                if(normalSpawns > 0)
+                {
+                    Instantiate(enemy, transform.position, Quaternion.identity);
+                    spawningTimer = 0;
+                    normalSpawns -= 1;
+                    return;
+                }
+                if(fastSpawns > 0)
+                {
+                    Instantiate(enemyFast, transform.position, Quaternion.identity);
+                    spawningTimer = 0;
+                    fastSpawns -= 1;
+                    return;
+                }
+                if(tankSpawns > 0)
+                {
+                    Instantiate(enemyTank, transform.position, Quaternion.identity);
+                    spawningTimer = 0;
+                    tankSpawns -= 1;
+                    return;
+                }
+            }
+            if(normalSpawns == 0 && fastSpawns == 0 && tankSpawns == 0)
+            {
+                running = true;
+                return;
+            }
+        }
+    }
+    private void updateAmounts()
+    {
+        normalSpawns = amountNormal;
+        fastSpawns = amountFast;
+        tankSpawns = amountTank;
+        timer = 0;
+        running = false;
     }
 }
